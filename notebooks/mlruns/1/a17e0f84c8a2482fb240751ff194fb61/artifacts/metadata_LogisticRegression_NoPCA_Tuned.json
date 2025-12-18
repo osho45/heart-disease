@@ -1,0 +1,1 @@
+{"run_name": "LogisticRegression_NoPCA_Tuned", "algorithm": "LogisticRegression", "use_pca": false, "use_tuning": true, "best_params": {"C": 3.146152492652225}}

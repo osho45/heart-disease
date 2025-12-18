@@ -1,0 +1,23 @@
+# Base image
+FROM python:3.9-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy requirements
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy source code and models
+# We copy the 'api' folder and 'models' folder to preserve the relative path logic in main.py
+COPY api /app/api
+COPY models /app/models
+
+# Expose port
+EXPOSE 8000
+
+# Run command
+# We run from /app, so uvicorn targets api.main
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

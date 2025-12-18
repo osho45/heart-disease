@@ -1,0 +1,1 @@
+{"run_name": "SVC_NoPCA_Tuned", "algorithm": "SVC", "use_pca": false, "use_tuning": true, "best_params": {"C": 2.4084470349684635, "gamma": 0.2539587295814454}}

@@ -1,0 +1,1 @@
+{"run_name": "LogisticRegression_PCA_Default", "algorithm": "LogisticRegression", "use_pca": true, "use_tuning": false, "best_params": "default"}

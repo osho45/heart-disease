@@ -1,0 +1,1 @@
+{"run_name": "GradientBoosting_NoPCA_Tuned", "algorithm": "GradientBoosting", "use_pca": false, "use_tuning": true, "best_params": {"n_estimators": 85, "learning_rate": 0.060525936254417885, "max_depth": 6}}

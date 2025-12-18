@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: heart_api
+    ports:
+      - "8000:8000"
+    volumes:
+      # Mount the models directory so if you retrain locally, the container sees it after restart
+      - ./models:/app/models
+    environment:
+      - MLFLOW_TRACKING_URI=${MLFLOW_TRACKING_URI}
+      - MLFLOW_TRACKING_USERNAME=${MLFLOW_TRACKING_USERNAME}
+      - MLFLOW_TRACKING_PASSWORD=${MLFLOW_TRACKING_PASSWORD}
+
+  ui:
+    build:
+      context: .
+      dockerfile: ui/Dockerfile
+    container_name: heart_ui
+    ports:
+      - "8501:8501"
+    environment:
+      - API_URL=http://api:8000/predict
+    depends_on:
+      - api
+    volumes:
+      # Persist the predictions DB
+      - ./predictions_data:/app/data
+    # We need to tweak the app to write DB to this volume path if we want persistence outside container
+    # For now, default app writes to CWD inside container.
