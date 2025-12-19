@@ -14,39 +14,37 @@ def create_normalized_db(csv_path, db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     
-    # 1. Read Raw Data
+
     df = pd.read_csv(csv_path)
     
-    # Generate Patient IDs (assuming one row per patient for this dataset)
+
     df['patient_id'] = range(1, len(df) + 1)
     
-    # 2. Extract Lookup Tables
-    # CP
+ 
     cp_values = sorted(df['cp'].unique())
     cursor.execute("CREATE TABLE lookup_cp (cp_code INTEGER PRIMARY KEY, description TEXT)")
     cursor.executemany("INSERT INTO lookup_cp (cp_code, description) VALUES (?, ?)", 
                        [(int(x), f"cp_{x}") for x in cp_values])
                        
-    # RestECG
+   
     restecg_values = sorted(df['restecg'].unique())
     cursor.execute("CREATE TABLE lookup_restecg (restecg_code INTEGER PRIMARY KEY, description TEXT)")
     cursor.executemany("INSERT INTO lookup_restecg (restecg_code, description) VALUES (?, ?)", 
                        [(int(x), f"restecg_{x}") for x in restecg_values])
                        
-    # Slope
+ 
     slope_values = sorted(df['slope'].unique())
     cursor.execute("CREATE TABLE lookup_slope (slope_code INTEGER PRIMARY KEY, description TEXT)")
     cursor.executemany("INSERT INTO lookup_slope (slope_code, description) VALUES (?, ?)", 
                        [(int(x), f"slope_{x}") for x in slope_values])
                        
-    # Thal
+   
     thal_values = sorted(df['thal'].unique())
     cursor.execute("CREATE TABLE lookup_thal (thal_code INTEGER PRIMARY KEY, description TEXT)")
     cursor.executemany("INSERT INTO lookup_thal (thal_code, description) VALUES (?, ?)", 
                        [(int(x), f"thal_{x}") for x in thal_values])
 
-    # 3. Create Patients Table
-    # Storing Age and Sex separately
+   
     cursor.execute('''
         CREATE TABLE patients (
             patient_id INTEGER PRIMARY KEY,
@@ -57,7 +55,6 @@ def create_normalized_db(csv_path, db_path):
     patients_data = df[['patient_id', 'age', 'sex']].drop_duplicates()
     patients_data.to_sql('patients', conn, if_exists='append', index=False)
     
-    # 4. Create Exams Table (The Main Table)
     cursor.execute('''
         CREATE TABLE exams (
             exam_id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -82,7 +79,6 @@ def create_normalized_db(csv_path, db_path):
         )
     ''')
     
-    # Prepare exams data
     exams_cols = ['patient_id', 'cp', 'trestbps', 'chol', 'fbs', 'restecg', 
                   'thalach', 'exang', 'oldpeak', 'slope', 'ca', 'thal', 'target']
     exams_data = df[exams_cols]

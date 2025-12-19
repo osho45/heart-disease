@@ -4,8 +4,7 @@ import numpy as np
 import os
 import sys
 
-# Define paths
-# resolving relative to this script file (src/predict.py)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 MODELS_DIR = os.path.join(BASE_DIR, '..', 'models')
 MODEL_PATH = os.path.normpath(os.path.join(MODELS_DIR, 'best_model.joblib'))
@@ -21,14 +20,13 @@ def predict(model, data_dict):
     Predicts heart disease risk for a single patient.
     Expects a dictionary with feature names matching the training data.
     """
-    # Convert dict to DataFrame
+   
     df = pd.DataFrame([data_dict])
     
-    # Predict
-    # The pipeline handles scaling and encoding automatically
+    
     try:
         prediction = model.predict(df)[0]
-        probability = model.predict_proba(df)[0][1] # prob of class 1 (disease)
+        probability = model.predict_proba(df)[0][1] 
         return prediction, probability
     except Exception as e:
         print(f"Error during prediction: {e}")
@@ -38,8 +36,7 @@ if __name__ == "__main__":
     print(f"Loading model from {MODEL_PATH}...")
     model = load_model(MODEL_PATH)
     
-    # Sample Patient Data (Modify this or load from CLI/File as needed)
-    # This sample should match the columns expected by the model (excluding target)
+    
     sample_patient = {
         'age': 63,
         'sex': 1,

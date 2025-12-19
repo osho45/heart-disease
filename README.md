@@ -1,4 +1,4 @@
-# Heart Disease Classification: End-to-End Pipeline
+# Heart Disease Classification
 
 This repository contains a full-stack Machine Learning project for predicting heart disease. It implements a complete pipeline from raw data to a deployed application, featuring database normalization, experiment tracking, and containerized deployment.
 
@@ -70,18 +70,20 @@ If you prefer not to use Docker:
     streamlit run ui/app.py
     ```
 
-## ☁️ Deployment Guide (DigitalOcean)
+## ☁️ Deployment Guide (GCP)
 
-To deploy to a cloud VPS (e.g., DigitalOcean Droplet):
+To deploy to Google Cloud Platform (GCP):
 
-1.  **Provision**: Create a Droplet (Ubuntu or Docker image).
-2.  **Clone**: SSH into the server and clone this repository.
-3.  **Configure**: Set environment variables (e.g., `MLFLOW_TRACKING_URI`) if needed.
+1.  **Provision**: Create a Compute Engine VM (Ubuntu).
+2.  **Firewall**: Add a VPC firewall rule to allow default ports `8000` and `8501`.
+3.  **Setup**: SSH into the VM, install Docker, and clone this repository.
 4.  **Launch**:
     ```bash
-    docker-compose up -d --build
+    sudo docker compose up -d --build
     ```
-5.  **Access**: Open your browser to `http://<your-droplet-ip>:8501`.
+5.  **Access**: Open `http://<VM-EXTERNAL-IP>:8501`.
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed step-by-step instructions.
 
 ## 🔬 Development
 

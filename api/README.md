@@ -5,7 +5,7 @@ FastAPI backend to serve the best trained heart classification model.
 ## Setup
 
 ```bash
-pip install -r ../requirements.txt
+python -m pip install -r requirements.txt
 ```
 
 ## Running the API
