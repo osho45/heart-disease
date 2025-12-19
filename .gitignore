@@ -9,8 +9,6 @@ env/
 venv/
 ENV/
 
-# Jupyter
-.ipynb_checkpoints/
 
 # Data & Database
 Data/
